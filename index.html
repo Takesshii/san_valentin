@@ -3,13 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Para alguien especial ❤️</title>
+    <title>Para Anahi ❤️</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Quicksand:wght@300;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Playfair+Display:ital,wght@0,400;1,700&family=Quicksand:wght@300;500&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --primary: #ff2d55;
+            --secondary: #fb7185;
+        }
         body {
-            background: radial-gradient(circle at center, #2d0b1e 0%, #0a0a0a 100%);
+            background: radial-gradient(circle at center, #1a050d 0%, #050505 100%);
             font-family: 'Quicksand', sans-serif;
             overflow: hidden;
             height: 100vh;
@@ -19,60 +23,71 @@
             color: white;
         }
         .glass-card {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 40px;
-            padding: 50px;
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(25px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 50px;
+            padding: 60px 40px;
             text-align: center;
-            box-shadow: 0 25px 50px rgba(0,0,0,0.5);
-            max-width: 500px;
+            box-shadow: 0 40px 100px rgba(0,0,0,0.8);
+            max-width: 550px;
             z-index: 10;
-            position: relative;
+            animation: fadeIn 2s ease-out;
         }
-        h1 { font-family: 'Dancing Script', cursive; text-shadow: 0 0 20px rgba(236, 72, 153, 0.5); }
-        .floating-heart {
-            position: absolute;
-            color: rgba(236, 72, 153, 0.3);
-            animation: float Up 6s linear infinite;
-            z-index: 1;
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        
+        h1 { font-family: 'Dancing Script', cursive; }
+        .anahi-name {
+            font-family: 'Playfair Display', serif;
+            letter-spacing: 2px;
+            background: linear-gradient(to right, #ff2d55, #fb7185);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 700;
         }
-        @keyframes floatUp {
-            0% { transform: translateY(110vh) rotate(0deg); opacity: 0; }
-            20% { opacity: 0.5; }
-            100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
-        }
-        #noBtn { transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
         .main-heart {
-            font-size: 80px;
-            animation: pulse 1.5s infinite;
+            font-size: 100px;
+            filter: drop-shadow(0 0 20px var(--primary));
+            animation: pulse 1.2s infinite;
             display: inline-block;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
+            cursor: pointer;
         }
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-            100% { transform: scale(1); }
+        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.15); } }
+        
+        #noBtn { transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .floating-star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            opacity: 0.5;
+            animation: twinkle var(--d) linear infinite;
+        }
+        @keyframes twinkle {
+            0% { transform: translateY(110vh); opacity: 0; }
+            50% { opacity: 0.7; }
+            100% { transform: translateY(-10vh); opacity: 0; }
         }
     </style>
 </head>
 <body>
 
-    <div id="particles-container"></div>
+    <div id="stars-container"></div>
 
     <div class="glass-card" id="card">
         <div id="content">
             <div class="main-heart">❤️</div>
-            <h1 class="text-6xl text-pink-500 mb-6">¿Quieres ser mi San Valentín?</h1>
-            <p class="text-gray-300 text-lg mb-10 leading-relaxed">
-                Hay momentos que se vuelven eternos, y me gustaría que este 14 de febrero fuera uno de ellos. ¿Me harías el honor?
+            <h2 class="text-xl uppercase tracking-[0.3em] text-pink-300 mb-2 opacity-80">Una pregunta para</h2>
+            <h1 class="text-7xl anahi-name mb-8">Anahi</h1>
+            <p class="text-gray-400 text-lg mb-12 italic leading-relaxed">
+                "Hay lugares que son destinos, y personas que son hogares. <br> Me encantaría que fueras mi destino este 14 de febrero."
             </p>
             
-            <div class="flex flex-col sm:flex-row items-center justify-center gap-8">
-                <button id="yesBtn" class="bg-gradient-to-r from-pink-500 to-rose-600 hover:from-pink-600 hover:to-rose-700 text-white font-bold py-4 px-12 rounded-full text-2xl shadow-[0_0_20px_rgba(236,72,153,0.4)] transition-all transform hover:scale-110 active:scale-95">
-                    Sí, quiero ❤️
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-10">
+                <button id="yesBtn" class="bg-white text-black font-bold py-4 px-14 rounded-full text-xl shadow-[0_0_30px_rgba(255,255,255,0.3)] transition-all transform hover:scale-110 active:scale-95 hover:bg-pink-50">
+                    SÍ, ACEPTO ❤️
                 </button>
-                <button id="noBtn" class="bg-transparent text-gray-400 font-medium py-2 px-6 rounded-full border border-gray-700 hover:border-gray-500 transition-colors">
+                <button id="noBtn" class="bg-transparent text-gray-500 font-medium py-2 px-6 rounded-full border border-gray-800 hover:text-gray-400">
                     No
                 </button>
             </div>
@@ -82,8 +97,8 @@
     <script>
         const noBtn = document.getElementById('noBtn');
         const yesBtn = document.getElementById('yesBtn');
-        const card = document.getElementById('card');
-        const messages = ["¿Estás segura? ✨", "Piénsalo un poquito...", "Será especial, lo prometo", "¡No le des ahí! 🥺", "Te debo un chocolate...", "Mira el botón rosa, es más lindo"];
+        const content = document.getElementById('content');
+        const messages = ["¿Anahi, segura? ✨", "Piénsalo bien...", "Te va a encantar la sorpresa", "¡Nooo! 🥺", "Dime que sí", "Te debo mil besos"];
         let msgIndex = 0;
 
         function moveButton() {
@@ -92,7 +107,6 @@
             noBtn.style.position = 'absolute';
             noBtn.style.left = `${x}px`;
             noBtn.style.top = `${y}px`;
-            
             noBtn.innerText = messages[msgIndex];
             msgIndex = (msgIndex + 1) % messages.length;
         }
@@ -101,39 +115,42 @@
         noBtn.addEventListener('touchstart', (e) => { e.preventDefault(); moveButton(); });
 
         yesBtn.addEventListener('click', () => {
-            const duration = 5 * 1000;
-            const animationEnd = Date.now() + duration;
-            const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
+            // Explosión de confeti elegante
+            const count = 200;
+            const defaults = { origin: { y: 0.7 }, colors: ['#ff2d55', '#ffffff', '#fb7185'] };
 
-            function randomInRange(min, max) { return Math.random() * (max - min) + min; }
+            function fire(particleRatio, opts) {
+                confetti({ ...defaults, ...opts, particleCount: Math.floor(count * particleRatio) });
+            }
 
-            const interval = setInterval(function() {
-                const timeLeft = animationEnd - Date.now();
-                if (timeLeft <= 0) return clearInterval(interval);
-                const particleCount = 50 * (timeLeft / duration);
-                confetti({...defaults, particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 }});
-                confetti({...defaults, particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 }});
-            }, 250);
+            fire(0.25, { spread: 26, startVelocity: 55 });
+            fire(0.2, { spread: 60 });
+            fire(0.35, { spread: 100, decay: 0.91, scalar: 0.8 });
+            fire(0.1, { spread: 120, startVelocity: 25, decay: 0.92, scalar: 1.2 });
 
-            document.getElementById('content').innerHTML = `
-                <div class="text-7xl mb-6">✨</div>
-                <h1 class="text-6xl text-pink-500 mb-6">¡Me has hecho muy feliz!</h1>
-                <p class="text-gray-200 text-2xl mb-4">Prometo que será un día inolvidable.</p>
-                <div class="mt-8 text-pink-400 font-bold tracking-widest uppercase">Nos vemos pronto ❤️</div>
+            content.innerHTML = `
+                <div class="text-8xl mb-6">🥂</div>
+                <h1 class="text-6xl text-white mb-6 font-bold">¡Gracias, Anahi!</h1>
+                <p class="text-pink-400 text-2xl mb-8">Haces que todo sea mejor.</p>
+                <div class="py-2 px-6 border border-pink-500/30 rounded-full inline-block text-sm tracking-widest text-pink-200 uppercase">
+                    Cita confirmada: 14 de Febrero
+                </div>
             `;
         });
 
-        function createHeart() {
-            const heart = document.createElement('div');
-            heart.classList.add('floating-heart');
-            heart.innerHTML = '❤️';
-            heart.style.left = Math.random() * 100 + 'vw';
-            heart.style.fontSize = Math.random() * 20 + 10 + 'px';
-            heart.style.animationDuration = Math.random() * 3 + 4 + 's';
-            document.getElementById('particles-container').appendChild(heart);
-            setTimeout(() => { heart.remove(); }, 6000);
+        // Crear estrellas de fondo
+        function createStar() {
+            const star = document.createElement('div');
+            star.classList.add('floating-star');
+            const size = Math.random() * 3 + 1 + 'px';
+            star.style.width = size;
+            star.style.height = size;
+            star.style.left = Math.random() * 100 + 'vw';
+            star.style.setProperty('--d', Math.random() * 3 + 4 + 's');
+            document.getElementById('stars-container').appendChild(star);
+            setTimeout(() => { star.remove(); }, 7000);
         }
-        setInterval(createHeart, 200);
+        setInterval(createStar, 150);
     </script>
 </body>
 </html>

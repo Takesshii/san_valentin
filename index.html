@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Para Anahi ❤️</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
@@ -17,22 +17,26 @@
             font-family: 'Quicksand', sans-serif;
             overflow: hidden;
             height: 100vh;
+            width: 100vw;
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
+            margin: 0;
+            touch-action: manipulation;
         }
         .glass-card {
             background: rgba(255, 255, 255, 0.03);
             backdrop-filter: blur(25px);
             border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 50px;
-            padding: 60px 40px;
+            border-radius: 40px;
+            padding: 40px 20px;
             text-align: center;
             box-shadow: 0 40px 100px rgba(0,0,0,0.8);
-            max-width: 550px;
+            width: 90%;
+            max-width: 500px;
             z-index: 10;
-            animation: fadeIn 2s ease-out;
+            animation: fadeIn 1.5s ease-out;
         }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
         
@@ -46,22 +50,27 @@
             font-weight: 700;
         }
         .main-heart {
-            font-size: 100px;
-            filter: drop-shadow(0 0 20px var(--primary));
+            font-size: 80px;
+            filter: drop-shadow(0 0 15px var(--primary));
             animation: pulse 1.2s infinite;
             display: inline-block;
-            margin-bottom: 25px;
-            cursor: pointer;
+            margin-bottom: 15px;
         }
-        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.15); } }
+        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
         
-        #noBtn { transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        #noBtn { 
+            transition: all 0.2s ease; 
+            z-index: 50;
+            white-space: nowrap;
+        }
+
         .floating-star {
             position: absolute;
             background: white;
             border-radius: 50%;
             opacity: 0.5;
             animation: twinkle var(--d) linear infinite;
+            pointer-events: none;
         }
         @keyframes twinkle {
             0% { transform: translateY(110vh); opacity: 0; }
@@ -77,16 +86,17 @@
     <div class="glass-card" id="card">
         <div id="content">
             <div class="main-heart">❤️</div>
-            <h2 class="text-xl uppercase tracking-[0.3em] text-pink-300 mb-2 opacity-80">Una pregunta para ti preciosa</h2>
-            <p class="text-gray-400 text-lg mb-12 italic leading-relaxed">
-                "No creo en las casualidades, pero sí en las mejores decisiones. <br> Y mi decisión favorita sería compartir este San Valentín contigo PRINCESA."
+            <h2 class="text-sm uppercase tracking-[0.3em] text-pink-300 mb-2 opacity-80">Una pregunta para ti</h2>
+            <h1 class="text-6xl anahi-name mb-6">PRINCESA</h1>
+            <p class="text-gray-300 text-lg mb-10 italic leading-relaxed px-4">
+                "No creo en las casualidades, pero sí en las mejores decisiones. <br> Y mi decisión favorita sería compartir este San Valentín contigo."
             </p>
             
-            <div class="flex flex-col sm:flex-row items-center justify-center gap-10">
-                <button id="yesBtn" class="bg-white text-black font-bold py-4 px-14 rounded-full text-xl shadow-[0_0_30px_rgba(255,255,255,0.3)] transition-all transform hover:scale-110 active:scale-95 hover:bg-pink-50">
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-6">
+                <button id="yesBtn" class="bg-white text-black font-bold py-3 px-10 rounded-full text-lg shadow-[0_0_20px_rgba(255,255,255,0.2)] transition-all transform hover:scale-105 active:scale-95">
                     SÍ, ACEPTO ❤️
                 </button>
-                <button id="noBtn" class="bg-transparent text-gray-500 font-medium py-2 px-6 rounded-full border border-gray-800 hover:text-gray-400">
+                <button id="noBtn" class="bg-transparent text-gray-500 font-medium py-2 px-6 rounded-full border border-gray-800">
                     No
                 </button>
             </div>
@@ -97,24 +107,51 @@
         const noBtn = document.getElementById('noBtn');
         const yesBtn = document.getElementById('yesBtn');
         const content = document.getElementById('content');
-        const messages = ["¿Anahi, segura? ✨", "Piénsalo bien...", "Te va a encantar la sorpresa", "¡Nooo! 🥺", "Dime que sí", "Te debo mil besos"];
+        const messages = [
+            "¿Anahi, segura? ✨", 
+            "Piénsalo un poquito más... 🥺", 
+            "¡Te va a encantar la sorpresa! 🎁", 
+            "Mi corazón late por tu 'Sí' ❤️", 
+            "¿Y si somos el mejor equipo? 👫", 
+            "Prometo cuidarte siempre 🌹", 
+            "Me harías el chico más feliz... ✨", 
+            "Eres mi pensamiento favorito 💭", 
+            "¡Mira el botón blanco, es más lindo! 😊", 
+            "No me rompas el corazón, Anahi... 💔", 
+            "Te debo mil besos y un café ☕", 
+            "¡Dime que sí y te llevo a las estrellas! ⭐"
+        ];
         let msgIndex = 0;
 
         function moveButton() {
-            const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
-            const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
-            noBtn.style.position = 'absolute';
-            noBtn.style.left = `${x}px`;
-            noBtn.style.top = `${y}px`;
+            // Margen para que el botón no toque los bordes físicos de la pantalla
+            const padding = 20; 
+            
+            // Calculamos el ancho y alto disponible de la ventana
+            const maxX = window.innerWidth - noBtn.offsetWidth - padding;
+            const maxY = window.innerHeight - noBtn.offsetHeight - padding;
+            
+            // Posiciones aleatorias dentro del área visible
+            const randomX = Math.max(padding, Math.floor(Math.random() * maxX));
+            const randomY = Math.max(padding, Math.floor(Math.random() * maxY));
+            
+            noBtn.style.position = 'fixed';
+            noBtn.style.left = randomX + 'px';
+            noBtn.style.top = randomY + 'px';
+            
+            // Cambiar texto del botón
             noBtn.innerText = messages[msgIndex];
             msgIndex = (msgIndex + 1) % messages.length;
         }
 
+        // Eventos para que huya
         noBtn.addEventListener('mouseover', moveButton);
-        noBtn.addEventListener('touchstart', (e) => { e.preventDefault(); moveButton(); });
+        noBtn.addEventListener('touchstart', (e) => {
+            e.preventDefault(); // Evita clics accidentales en móvil
+            moveButton();
+        });
 
         yesBtn.addEventListener('click', () => {
-            // Explosión de confeti elegante
             const count = 200;
             const defaults = { origin: { y: 0.7 }, colors: ['#ff2d55', '#ffffff', '#fb7185'] };
 
@@ -128,17 +165,18 @@
             fire(0.1, { spread: 120, startVelocity: 25, decay: 0.92, scalar: 1.2 });
 
             content.innerHTML = `
-                <div class="text-8xl mb-6">🥂</div>
-                <h1 class="text-6xl text-white mb-6 font-bold">¡Gracias, Anahi!</h1>
-                <p class="text-pink-400 text-2xl mb-8">Haces que todo sea mejor.</p>
-                <div class="py-2 px-6 border border-pink-500/30 rounded-full inline-block text-sm tracking-widest text-pink-200 uppercase">
+                <div class="text-7xl mb-6">🥂</div>
+                <h1 class="text-5xl text-white mb-6 font-bold">¡Gracias, Anahi!</h1>
+                <p class="text-pink-400 text-xl mb-8">Haces que todo sea mejor.</p>
+                <div class="py-2 px-6 border border-pink-500/30 rounded-full inline-block text-xs tracking-widest text-pink-200 uppercase">
                     Cita confirmada: 14 de Febrero
                 </div>
             `;
         });
 
-        // Crear estrellas de fondo
+        // Crear estrellas de fondo animadas
         function createStar() {
+            const container = document.getElementById('stars-container');
             const star = document.createElement('div');
             star.classList.add('floating-star');
             const size = Math.random() * 3 + 1 + 'px';
@@ -146,10 +184,10 @@
             star.style.height = size;
             star.style.left = Math.random() * 100 + 'vw';
             star.style.setProperty('--d', Math.random() * 3 + 4 + 's');
-            document.getElementById('stars-container').appendChild(star);
+            container.appendChild(star);
             setTimeout(() => { star.remove(); }, 7000);
         }
-        setInterval(createStar, 150);
+        setInterval(createStar, 200);
     </script>
 </body>
 </html>
